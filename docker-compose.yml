@@ -1,0 +1,15 @@
+version: '3.0'
+services:
+  web:
+    image: 1cmobile/heroku-php 
+    command: 'bash -c ''vendor/bin/heroku-php-apache2 web/'''
+    working_dir: /app/user
+    environment:
+      PORT: 8080
+      http_proxy: http://192.168.57.78:3128 
+      https_proxy: https://192.168.57.78:3128
+    ports:
+      - '8080:8080'
+      - '9000-9001:9000-9001'
+    volumes: 
+      - ./web:/app/user/web
