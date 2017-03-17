@@ -1,6 +1,5 @@
 FROM heroku/php
 
-RUN ls
 #RUN pecl upgrade-all 
 RUN yes | pear config-set http_proxy http://192.168.57.78:3128 \
     && pecl channel-update pecl.php.net \
