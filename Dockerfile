@@ -5,8 +5,8 @@ FROM heroku/cedar:14
 ENV PORT 8080
 
 
-RUN export http_proxy=http://192.168.57.78:3128
-RUN export https_proxy=http://192.168.57.78:3128
+#RUN export http_proxy=http://192.168.57.78:3128
+#RUN export https_proxy=http://192.168.57.78:3128
 
 # Which versions?
 ENV PHP_VERSION 5.6.15
