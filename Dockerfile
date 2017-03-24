@@ -21,6 +21,7 @@ WORKDIR /app/user
 ENV PATH /app/.heroku/php/bin:/app/.heroku/php/sbin:$PATH
 
 # Install Apache
+#--proxy http://192.168.57.78:3128 
 RUN curl --location https://lang-php.s3.amazonaws.com/dist-cedar-14-master/apache-$HTTPD_VERSION.tar.gz | tar xz -C /app/.heroku/php
 # Config
 RUN curl --location https://raw.githubusercontent.com/heroku/heroku-buildpack-php/5a770b914549cf2a897cbbaf379eb5adf410d464/conf/apache2/httpd.conf.default > /app/.heroku/php/etc/apache2/httpd.conf
@@ -41,10 +42,10 @@ user nobody root;\n\
 " >> /app/.heroku/php/etc/nginx/nginx.conf
 
 # Install PHP
-RUN curl --location https://lang-php.s3.amazonaws.com/dist-cedar-14-master/php-$PHP_VERSION.tar.gz | tar xz -C /app/.heroku/php
+RUN curl  --location https://lang-php.s3.amazonaws.com/dist-cedar-14-master/php-$PHP_VERSION.tar.gz | tar xz -C /app/.heroku/php
 # Config
 RUN mkdir -p /app/.heroku/php/etc/php/conf.d
-RUN curl --location https://raw.githubusercontent.com/heroku/heroku-buildpack-php/5a770b914549cf2a897cbbaf379eb5adf410d464/conf/php/php.ini > /app/.heroku/php/etc/php/php.ini
+RUN curl  --location https://raw.githubusercontent.com/heroku/heroku-buildpack-php/5a770b914549cf2a897cbbaf379eb5adf410d464/conf/php/php.ini > /app/.heroku/php/etc/php/php.ini
 # Enable all optional exts
 
 #RUN pear config-set http_proxy http://192.168.57.78:3128
@@ -86,6 +87,10 @@ xdebug.remote_enable=on \n\
 xdebug.remote_autostart=on \n\
 xdebug.remote=9000 \n\
 extension=mongodb.so \n\
+
+error_reporting = E_ALL  \n\
+display_errors = On  \n\
+display_startup_errors = On  \n\
 " >> /app/.heroku/php/etc/php/php.ini
 
 # Install Composer
@@ -104,6 +109,7 @@ RUN composer show --installed heroku/heroku-buildpack-php || { echo 'Your compos
 #ADD . /app/user/
 # run install hooks
 RUN cat composer.json | python -c 'import sys,json; sys.exit("post-install-cmd" not in json.load(sys.stdin).get("scripts", {}));' && composer run-script post-install-cmd || true
+
 
 # TODO: run "composer compile", like Heroku?
 
