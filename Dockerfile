@@ -97,18 +97,18 @@ display_startup_errors = On  \n\
 RUN curl --location "https://lang-php.s3.amazonaws.com/dist-cedar-14-master/composer-1.0.0alpha11.tar.gz" | tar xz -C /app/.heroku/php
 
 # copy dep files first so Docker caches the install step if they don't change
-COPY composer.lock /app/user/
-COPY composer.json /app/user/
+# COPY composer.lock /app/user/
+# COPY composer.json /app/user/
 
 # run install but without scripts as we don't have the app source yet
-RUN composer install
-RUN composer update
+# RUN composer install
+# RUN composer update
 # require the buildpack for execution
-RUN composer show --installed heroku/heroku-buildpack-php || { echo 'Your composer.json must have "heroku/heroku-buildpack-php" as a "require-dev" dependency.'; exit 1; }
+# RUN composer show --installed heroku/heroku-buildpack-php || { echo 'Your composer.json must have "heroku/heroku-buildpack-php" as a "require-dev" dependency.'; exit 1; }
 # rest of app
 #ADD . /app/user/
 # run install hooks
-RUN cat composer.json | python -c 'import sys,json; sys.exit("post-install-cmd" not in json.load(sys.stdin).get("scripts", {}));' && composer run-script post-install-cmd || true
+# RUN cat composer.json | python -c 'import sys,json; sys.exit("post-install-cmd" not in json.load(sys.stdin).get("scripts", {}));' && composer run-script post-install-cmd || true
 
 
 # TODO: run "composer compile", like Heroku?
