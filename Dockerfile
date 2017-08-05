@@ -93,6 +93,8 @@ xdebug.remote_enable=on \n\
 xdebug.remote_autostart=on \n\
 xdebug.remote=9000 \n\
 extension=mongodb.so \n\
+xdebug.remote_connect_back=1  \n\
+xdebug.idekey=FROMDOCKER  \n\
 
 error_reporting = E_ALL  \n\
 display_errors = On  \n\
