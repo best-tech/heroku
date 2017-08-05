@@ -22,10 +22,10 @@ ENV PATH /app/.heroku/php/bin:/app/.heroku/php/sbin:$PATH
 
 RUN yes | apt upgrade && \
     apt update && \
-    apt install \
+    yes | apt install -y \
     nano \
     mc
-    
+
 # Install Apache
 #--proxy http://192.168.57.78:3128 
 RUN curl --location https://lang-php.s3.amazonaws.com/dist-cedar-14-master/apache-$HTTPD_VERSION.tar.gz | tar xz -C /app/.heroku/php
