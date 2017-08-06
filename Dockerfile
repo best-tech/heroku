@@ -24,7 +24,8 @@ RUN yes | apt upgrade && \
     apt update && \
     yes | apt install -y \
     nano \
-    mc
+    mc \
+    net-tools
 
 # Install Apache
 #--proxy http://192.168.57.78:3128 
